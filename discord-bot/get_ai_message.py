@@ -28,6 +28,7 @@ def create_ai_comment(message, reaction):
     prompt = f"""
     「{message}」というコメントに{reaction}のリアクションをしたユーザーが発言しそうなことを生成して．
     長さは短めで気軽な発言系でお願いします。
+    ただし，URLはメッセージから削除してください。
     """
 
     completion = client.chat.completions.create(model="gpt-4o-mini", messages=[{"role": "user", "content": prompt}])
