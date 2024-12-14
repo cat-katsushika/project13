@@ -1,4 +1,5 @@
 import os
+import re
 
 import discord
 import requests
@@ -78,7 +79,11 @@ def format_quoted_message(user_id: int, username: str, message_content: str, rep
         str: 引用形式にフォーマットされたメッセージ。
     """
     # 元メッセージを引用形式に整形（改行対応）
-    quoted_message = "\n".join([f"> {line}" for line in message_content.splitlines()])
+
+    quoted_message = "\n".join(
+        f"> {line}" for line in message_content.splitlines()
+        if not re.search(r'https?://', line)
+    )
 
     # 全体のメッセージを構築
     formatted_message = f"<@{user_id}> ({username}) さんのメッセージ:\n" f"{quoted_message}\n\n" f"{reply_text}"
